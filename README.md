@@ -22,14 +22,20 @@ Eğer sürüm görüyorsan devam et. Hata alırsan Kali'de önce Python 3 kurulu
 ### 3) Lokal web sunucusunu başlat
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Terminalde `Serving HTTP on 0.0.0.0 port 8000` benzeri bir çıktı görmelisin.
+Terminalde `Serving HTTP on 127.0.0.1 port 8000` benzeri bir çıktı görmelisin.
 
 ### 4) Tarayıcıdan sayfayı aç
 
-Aşağıdaki adrese git:
+Önce bunu dene:
+
+```text
+http://127.0.0.1:8000
+```
+
+Olmazsa alternatif:
 
 ```text
 http://localhost:8000
@@ -52,7 +58,42 @@ Sunucuyu çalıştırdığın terminale dönüp `Ctrl + C` yap.
 
 ## Sorun Giderme
 
-- **Sayfa açılmıyor**: Sunucunun gerçekten çalıştığını kontrol et (`python3 -m http.server 8000`).
+### `http://localhost:8000` bu siteye ulaşılamıyor
+
+Aşağıdaki adımları sırayla uygula:
+
+1. Sunucu gerçekten çalışıyor mu?
+
+```bash
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+2. Terminalde şu çıktıyı gör: `Serving HTTP on 127.0.0.1 port 8000`
+3. Aynı makinede test için şu adresi kullan: `http://127.0.0.1:8000`
+4. Portu dinleyen süreç var mı kontrol et:
+
+```bash
+ss -ltnp | rg 8000
+```
+
+5. Tarayıcı yerine terminalden cevap geliyor mu kontrol et:
+
+```bash
+curl -I http://127.0.0.1:8000
+```
+
+`HTTP/1.0 200 OK` görürsen sunucu çalışıyordur; sorun tarayıcı cache/ayar olabilir.
+
+### Diğer yaygın sorunlar
+
+- **Port dolu (`Address already in use`)**:
+
+  ```bash
+  python3 -m http.server 8080 --bind 127.0.0.1
+  ```
+
+  Sonra `http://127.0.0.1:8080` aç.
+
 - **Kamera izni çıkmıyor**: Tarayıcı ayarlarında site izinlerini sıfırla ve tekrar dene.
 - **Kamera açılmıyor**: Kamerayı kullanan başka uygulamaları kapat.
 - **Uzak cihazdan erişim**: Aynı ağdan testte `http://<kali-ip>:8000` kullan; firewall/ağ izinlerini kontrol et.
