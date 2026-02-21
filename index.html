@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kamera İzin Demosu (Yasal)</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Kamera İzin Demosu</h1>
+      <p>
+        Bu sayfa yalnızca tarayıcının standart izin penceresiyle kamera erişimi dener.
+        Kullanıcı açıkça izin vermezse kamera açılmaz.
+      </p>
+
+      <div class="actions">
+        <button id="startBtn" type="button">Kamerayı Başlat</button>
+        <button id="stopBtn" type="button" disabled>Kamerayı Durdur</button>
+      </div>
+
+      <p id="status" class="status">Durum: Bekleniyor</p>
+      <video id="preview" autoplay playsinline muted></video>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
